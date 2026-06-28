@@ -9,7 +9,7 @@ This plan keeps schedule changes local and dry-run only. The CLI writes
 - Fit the weekly schedule into `80` hours or less.
 - Use customized zones instead of all-zone periods so each area can be rotated.
 - Do not schedule every known area on the same day.
-- Keep `Autoplats` inside the night window only.
+- Keep selected night-only areas inside the night window only.
 - Default night window is `22:00-06:00`.
 - Default daytime window is `06:00-22:00`.
 - Keep one schedule period per daytime rotation bucket and one period per
@@ -51,21 +51,22 @@ python tools/navimow_schedule_cli.py optimize-weekly \
   --schedule viewer/navimow-map/schedule-draft.json \
   --output viewer/navimow-map/schedule-optimized.json \
   --max-weekly-hours 80 \
-  --night-only-area Autoplats \
+  --night-only-area 'AREA_NAME_OR_ID' \
   --night-window 22:00-06:00 \
   --day-window 06:00-22:00 \
   --stale-policy warn \
   --explain
 ```
 
-The current local dry run schedules exactly `80.00` hours. `Autoplats` is placed
-only in night slots, and all daytime periods are customized zone rotations.
+The current local dry run schedules exactly `80.00` hours when a local
+night-only area is supplied. Night-only areas are placed only in night slots,
+and all daytime periods are customized zone rotations.
 
 ## Current Draft Shape
 
-- Sunday: Autoplats at night, then a daytime rotation.
+- Sunday: optional night-only area slot, then a daytime rotation.
 - Monday through Wednesday: daytime rotations only.
-- Thursday: Autoplats at night, then a daytime rotation.
+- Thursday: optional night-only area slot, then a daytime rotation.
 - Friday and Saturday: daytime rotations only.
 
 This is intentionally a starting point. After more trail-history and compressed

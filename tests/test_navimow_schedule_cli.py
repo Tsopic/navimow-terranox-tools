@@ -93,7 +93,7 @@ def weekly_optimizer_context():
             },
             {
                 "id": 7,
-                "name": "Autoplats",
+                "name": "Night Yard",
                 "sizeM2": 220.0,
                 "cutting": {"effectiveHeightMm": 70},
                 "lastMow": {"status": "completed", "lastAt": "2026-06-27T12:00:00+00:00", "partitionPercentage": 100},
@@ -322,7 +322,7 @@ def test_weekly_optimizer_caps_hours_and_rotates_custom_areas():
         context,
         max_weekly_hours=80,
         target_weekly_hours=None,
-        night_only_selectors=["autoplats"],
+        night_only_selectors=["night yard"],
         night_window="22:00-06:00",
         day_window="06:00-22:00",
         min_visits_per_week=2,
@@ -339,13 +339,13 @@ def test_weekly_optimizer_caps_hours_and_rotates_custom_areas():
         assert day_ids != all_ids
 
 
-def test_weekly_optimizer_keeps_autoplats_inside_night_window():
+def test_weekly_optimizer_keeps_named_area_inside_night_window():
     context = weekly_optimizer_context()
     plan = cli.build_weekly_optimization_plan(
         context,
         max_weekly_hours=80,
         target_weekly_hours=None,
-        night_only_selectors=["Autoplats"],
+        night_only_selectors=["Night Yard"],
         night_window="22:00-06:00",
         day_window="06:00-22:00",
         min_visits_per_week=2,
@@ -353,15 +353,15 @@ def test_weekly_optimizer_keeps_autoplats_inside_night_window():
     )
 
     night_segments = cli.window_segments("22:00-06:00")
-    autoplats_periods = [
+    night_area_periods = [
         period
         for day in plan["dayPlans"]
         for period in day["periods"]
         if 7 in period["partitionIds"]
     ]
 
-    assert autoplats_periods
-    assert all(cli.period_within_segments(period, night_segments) for period in autoplats_periods)
+    assert night_area_periods
+    assert all(cli.period_within_segments(period, night_segments) for period in night_area_periods)
 
 
 def test_weekly_optimizer_unknown_night_area_fails():
@@ -404,7 +404,7 @@ def test_weekly_optimizer_cli_writes_output(tmp_path, monkeypatch):
             "--target-weekly-hours",
             "12",
             "--night-only-area",
-            "autoplats",
+            "night yard",
             "--stale-policy",
             "warn",
         ]

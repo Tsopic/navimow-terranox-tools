@@ -102,7 +102,8 @@ make schedule-payload
   latest local SQLite schedule snapshot.
 - `schedule-optimize-dry-run` proposes one optimized day.
 - `schedule-optimize-weekly` creates a weekly custom-zone rotation with an
-  `80` hour default cap and `Autoplats` night-only by default.
+  `80` hour default cap. Pass `NIGHT_ONLY_AREAS='AREA_NAME_OR_ID'` to keep a
+  selected local area inside the night window only.
 - `schedule-payload` prints an app-shaped dry-run `planList` payload.
 
 No schedule command sends data to the mower.

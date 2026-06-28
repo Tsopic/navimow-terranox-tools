@@ -517,7 +517,7 @@ to propose changes unless you explicitly add `--ignore-blockers`. That override
 is still dry-run only and records the ignored blockers in the draft metadata.
 
 Create a weekly dry-run optimized draft that rotates customized zones, keeps
-`Autoplats` in the night window only, and caps the plan at 80 hours:
+selected areas in the night window only, and caps the plan at 80 hours:
 
 ```bash
 python tools/navimow_schedule_cli.py optimize-weekly \
@@ -525,7 +525,7 @@ python tools/navimow_schedule_cli.py optimize-weekly \
   --schedule viewer/navimow-map/schedule-draft.json \
   --output viewer/navimow-map/schedule-optimized.json \
   --max-weekly-hours 80 \
-  --night-only-area Autoplats \
+  --night-only-area 'AREA_NAME_OR_ID' \
   --night-window 22:00-06:00 \
   --day-window 06:00-22:00 \
   --stale-policy warn \
@@ -541,7 +541,7 @@ The same preview is available through Make:
 ```bash
 make schedule-export
 make schedule-optimize-dry-run OPTIMIZE_DAY=Tuesday
-make schedule-optimize-weekly
+make schedule-optimize-weekly NIGHT_ONLY_AREAS='AREA_NAME_OR_ID'
 make schedule-validate
 make schedule-payload
 ```
