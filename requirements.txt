@@ -1,0 +1,4 @@
+certifi
+Pillow
+pytest
+paho-mqtt

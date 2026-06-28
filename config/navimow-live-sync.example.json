@@ -1,0 +1,43 @@
+{
+  "baseUrl": "https://navimow-fra.ninebot.com",
+  "vehicleSn": "${NAVIMOW_VEHICLE_SN}",
+  "headers": {
+    "User-Agent": "NavimowLocalSync/0.1",
+    "Content-Type": "application/json",
+    "Authorization": "${NAVIMOW_AUTHORIZATION}"
+  },
+  "routes": [
+    "index2",
+    "device-info",
+    "get-location",
+    "set-list",
+    "trail-time"
+  ],
+  "requestBodies": {
+    "index2": {},
+    "device-info": {},
+    "get-location": {},
+    "set-list": {},
+    "trail-time": {},
+    "trail-data": {},
+    "auth-list": {},
+    "mower-state": {},
+    "weather": {},
+    "today-plan": {},
+    "firmware": {},
+    "maintenance": {},
+    "map-list": {},
+    "map-detail": {},
+    "get-iot-file": {},
+    "openapi-auth-list": {},
+    "openapi-vehicle-status": {
+      "devices": []
+    },
+    "openapi-mqtt-info": {},
+    "openapi-response-commands": {}
+  },
+  "auth": {
+    "provider": "manual",
+    "tokenFile": "config/navimow-oauth.local.json"
+  }
+}

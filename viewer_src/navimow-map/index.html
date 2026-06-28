@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Navimow Terranox Console</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="assets/navimow-map.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Navimow Terranox Console</h1>
+      <p id="mapMeta"></p>
+      <div class="live-status-strip" id="liveStatusStrip" aria-live="polite"></div>
+    </div>
+    <div class="metric-strip" id="metricStrip"></div>
+  </header>
+
+  <main class="layout">
+    <section class="map-panel" aria-label="Mower map">
+      <div class="toolbar">
+        <div class="segmented" aria-label="Map background">
+          <button type="button" id="terrainMode" class="is-active">Terrain</button>
+          <button type="button" id="satelliteMode">Satellite</button>
+        </div>
+        <div class="icon-group" aria-label="Zoom controls">
+          <button type="button" id="zoomOut" title="Zoom out">-</button>
+          <button type="button" id="zoomIn" title="Zoom in">+</button>
+          <button type="button" id="zoomFit" title="Fit width">Fit</button>
+          <button type="button" id="zoomReset" title="Actual size">1:1</button>
+        </div>
+        <label><input type="checkbox" id="toggleLabels" checked> Labels</label>
+        <label><input type="checkbox" id="toggleObstacles" checked> Obstacles</label>
+        <label><input type="checkbox" id="toggleAllZones" checked> All-zone schedule</label>
+        <label class="range-label">Overlay <input type="range" id="overlayOpacity" min="25" max="90" value="54"></label>
+      </div>
+      <div class="map-scroll" id="mapViewport">
+        <svg id="mapView" role="img" aria-label="Map with named mowing areas"></svg>
+      </div>
+      <div class="attribution" id="mapAttribution"></div>
+    </section>
+
+    <aside class="side-panel">
+      <nav class="tabs" aria-label="Console sections">
+        <button type="button" class="tab is-active" data-tab="details">Area</button>
+        <button type="button" class="tab" data-tab="planner">Planner</button>
+        <button type="button" class="tab" data-tab="mower">Mower</button>
+        <button type="button" class="tab" data-tab="routes">Routes</button>
+      </nav>
+
+      <section class="tab-panel is-active" id="detailsPanel">
+        <section class="details" id="details"></section>
+        <section class="area-list" id="areaList" aria-label="Areas"></section>
+      </section>
+
+      <section class="tab-panel" id="plannerPanel">
+        <section class="planner" id="planner"></section>
+      </section>
+
+      <section class="tab-panel" id="mowerPanel">
+        <section class="mower-display" id="mowerDisplay"></section>
+      </section>
+
+      <section class="tab-panel" id="routesPanel">
+        <section class="routes" id="routes"></section>
+      </section>
+    </aside>
+  </main>
+
+  <script src="navimow-map-data.js"></script>
+  <script src="assets/navimow-map.js"></script>
+</body>
+</html>
