@@ -1,0 +1,17 @@
+services:
+  viewer:
+    build: .
+    image: navimow-terranox-tools:local
+    ports:
+      - "${PORT:-8765}:8765"
+    environment:
+      HOST: 0.0.0.0
+      PORT: 8765
+      DB: data/navimow.sqlite
+      VIEWER_OUTPUT: viewer/navimow-map
+      STATUS_ONLY: "${STATUS_ONLY:-auto}"
+      SATELLITE: "${SATELLITE:-0}"
+    volumes:
+      - ./data:/app/data
+      - ./viewer:/app/viewer
+      - ./config:/app/config:ro

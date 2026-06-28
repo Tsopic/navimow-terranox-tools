@@ -49,6 +49,24 @@ make live-console-no-mqtt
   checks, and MQTT listening with polling fallback.
 - `live-console-no-mqtt` starts the same console without MQTT.
 
+## Docker
+
+```bash
+make docker-build
+make docker-test
+make docker-serve PORT=8765
+PORT=8765 docker compose up --build viewer
+```
+
+The Docker image contains source, docs, tests, and viewer templates only. The
+build context excludes `.git`, local configs, captures, SQLite data, generated
+viewers, logs, screenshots, APKs, and decompiled output. At runtime, the
+container mounts `./data`, `./viewer`, and read-only `./config`.
+
+Default mode is `STATUS_ONLY=auto`: build the full viewer when mounted
+`data/navimow.sqlite` has map detail and render metadata; otherwise build a
+status-only console.
+
 ## Map, Area, Settings, And History
 
 ```bash

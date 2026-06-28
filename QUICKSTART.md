@@ -18,6 +18,17 @@ If map ingest fails on compressed data, install the system `zstd` CLI:
 brew install zstd
 ```
 
+Docker is also supported:
+
+```bash
+make docker-build
+make docker-serve PORT=8765
+```
+
+The Docker image starts a status-only console when no private SQLite/map data is
+mounted. With local `data/`, `viewer/`, and `config/` bind mounts, it can serve
+your local generated console without copying private files into the image.
+
 ## 2. Use OAuth/OpenAPI For Live Status
 
 If `config/navimow-oauth.local.json` already exists, run the read-only OpenAPI

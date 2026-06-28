@@ -11,6 +11,8 @@ Use this before pushing to the public GitHub repository.
   `SECURITY.md`, and `LICENSE`
 - Redacted example config files such as
   `config/navimow-live-sync.example.json`
+- Docker packaging files such as `Dockerfile`, `.dockerignore`,
+  `docker-compose.yml`, and `docker/entrypoint.sh`
 
 ## Exclude
 
@@ -33,12 +35,18 @@ Use this before pushing to the public GitHub repository.
 git status --short
 git ls-files --others --exclude-standard
 git ls-files --others --ignored --exclude-standard
+docker build -t navimow-terranox-tools:local .
+docker run --rm navimow-terranox-tools:local test
 PYTHONDONTWRITEBYTECODE=1 python3 -B -m pytest -q -p no:cacheprovider tests
 ```
 
 Expected public files should appear in `git ls-files --others
 --exclude-standard` before the first commit. Private/generated files should
 appear only in ignored output or not at all.
+
+The Docker build context should be source-only. `.dockerignore` must exclude
+`.git`, captures, local configs, SQLite data, generated viewers, logs,
+screenshots, APKs, and decompiled output.
 
 ## Public Messaging
 

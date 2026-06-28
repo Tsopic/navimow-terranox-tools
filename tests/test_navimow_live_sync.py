@@ -2959,8 +2959,12 @@ def test_completion_report_strict_fails_until_full_goal_ready_without_secrets(tm
     assert payload["ready"] is False
     assert payload["documentation"]["quickstartPresent"] is True
     assert payload["documentation"]["missingCommandDocs"] == []
-    assert payload["repo"]["gitPresent"] is True
-    assert payload["repo"]["status"] in {"ready", "needs_baseline"}
+    root_has_git = (ROOT / ".git" / "HEAD").exists()
+    assert payload["repo"]["gitPresent"] is root_has_git
+    if root_has_git:
+        assert payload["repo"]["status"] in {"ready", "needs_baseline"}
+    else:
+        assert payload["repo"]["status"] == "missing_git"
     assert "openapi-live-console" not in payload["blockingItemIds"]
     if payload["repo"]["status"] != "ready":
         assert "repo-baseline" in payload["blockingItemIds"]

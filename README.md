@@ -106,6 +106,35 @@ make viewer
 make serve-live
 ```
 
+## Docker
+
+Build and test the local image:
+
+```bash
+make docker-build
+make docker-test
+```
+
+Serve the console from Docker:
+
+```bash
+make docker-serve PORT=8765
+```
+
+Or use Compose:
+
+```bash
+PORT=8765 docker compose up --build viewer
+```
+
+The image does not include private captures, SQLite data, generated viewers,
+local token files, screenshots, APKs, or decompiled app output. Runtime mounts
+provide `./data`, `./viewer`, and read-only `./config`. If mounted
+`data/navimow.sqlite` has map detail and render metadata, the container builds
+the full local viewer. Otherwise it serves a status-only console. Set
+`STATUS_ONLY=true` to force status-only mode, or `SATELLITE=1` to allow
+satellite generation from local map data.
+
 ## What Works
 
 - Real map/area rendering from decoded map detail.

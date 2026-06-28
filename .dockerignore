@@ -1,0 +1,30 @@
+.git/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+
+# Local credentials and live-sync config
+config/*.local.json
+.env
+
+# Private captures, reverse-engineering artifacts, and generated state
+apk/
+captures/
+data/
+decompiled/
+logs/
+patched/
+refs/
+screenshots/
+viewer/
+
+# Large/sensitive artifacts
+*.apk
+*.apks
+*.db
+*.sqlite
+*.sqlite3
+*.mitm
+*.log

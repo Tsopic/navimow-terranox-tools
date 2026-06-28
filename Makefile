@@ -1,6 +1,7 @@
-.PHONY: setup test ingest viewer viewer-no-satellite viewer-status-only viewer-if-map-data serve serve-local serve-live live-console live-console-no-mqtt live-ui-smoke quickstart-live live-plan live-route-catalog live-route-coverage live-setup-report completion-report completion-report-strict live-auth-discover consumer-session-report live-android-doctor live-android-capture live-doctor live-sync-dry-run live-map-plan live-map-delta live-map-artifacts trail-replay-report live-once-status live-once-viewer live-poll live-poll-status live-poll-viewer live-poll-viewer-no-satellite openapi-init openapi-preflight oauth-login-url oauth-exchange-code oauth-doctor oauth-refresh openapi-discover openapi-configure-status openapi-sync-status openapi-first-sync openapi-refresh-status openapi-refresh-viewer mqtt-doctor mqtt-listen mqtt-sample-report mqtt-readiness mqtt-ui-report mqtt-replay-smoke mqtt-replay-http-check mqtt-replay-clear schedule-export schedule-optimize-dry-run schedule-optimize-weekly schedule-validate schedule-payload live-health live-health-strict clean-generated
+.PHONY: setup test ingest viewer viewer-no-satellite viewer-status-only viewer-if-map-data serve serve-local serve-live live-console live-console-no-mqtt live-ui-smoke quickstart-live live-plan live-route-catalog live-route-coverage live-setup-report completion-report completion-report-strict live-auth-discover consumer-session-report live-android-doctor live-android-capture live-doctor live-sync-dry-run live-map-plan live-map-delta live-map-artifacts trail-replay-report live-once-status live-once-viewer live-poll live-poll-status live-poll-viewer live-poll-viewer-no-satellite openapi-init openapi-preflight oauth-login-url oauth-exchange-code oauth-doctor oauth-refresh openapi-discover openapi-configure-status openapi-sync-status openapi-first-sync openapi-refresh-status openapi-refresh-viewer mqtt-doctor mqtt-listen mqtt-sample-report mqtt-readiness mqtt-ui-report mqtt-replay-smoke mqtt-replay-http-check mqtt-replay-clear schedule-export schedule-optimize-dry-run schedule-optimize-weekly schedule-validate schedule-payload docker-build docker-test docker-serve docker-compose-up live-health live-health-strict clean-generated
 
 PYTHON ?= $(shell [ -x .venv/bin/python ] && printf .venv/bin/python || printf python3)
+DOCKER_IMAGE ?= navimow-terranox-tools:local
 DB ?= data/navimow.sqlite
 MAP_DIR ?= data/maps
 VIEWER ?= viewer/navimow-map
@@ -222,6 +223,18 @@ schedule-validate:
 
 schedule-payload:
 	$(PYTHON) tools/navimow_schedule_cli.py payload --schedule $(OPTIMIZED_SCHEDULE)
+
+docker-build:
+	docker build -t $(DOCKER_IMAGE) .
+
+docker-test:
+	docker run --rm $(DOCKER_IMAGE) test
+
+docker-serve:
+	docker run --rm -p $(PORT):8765 -v "$$(pwd)/data:/app/data" -v "$$(pwd)/viewer:/app/viewer" -v "$$(pwd)/config:/app/config:ro" $(DOCKER_IMAGE)
+
+docker-compose-up:
+	docker compose up --build viewer
 
 live-health:
 	$(PYTHON) tools/navimow_live_sync.py live-health --config $(LIVE_CONFIG) --db $(DB) --viewer-output $(VIEWER)
